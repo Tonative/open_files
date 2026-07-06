@@ -41,7 +41,7 @@
     "transform": "cr:transform"
   },
   "@type": "sc:Dataset",
-  "name": "afrivoices-short-story-speech",
+  "name": "african-storytelling-dataset",
   "description": "A multilingual speech dataset of African short stories featuring 5–10 minute natural narrations in Yoruba, Igbo, Hausa, and Dholuo. Includes traditional folktales and contemporary narratives exploring cultural preservation and technology, with paired audio recordings and transcripts designed for ASR, TTS, and speech-text alignment research on low-resource African languages.",
   "conformsTo": "http://mlcommons.org/croissant/1.0",
   "license": "https://creativecommons.org/licenses/by-nc/4.0/",
@@ -75,7 +75,7 @@
       "name": "audio-files",
       "description": "Audio recordings of short story narrations.",
       "encodingFormat": "audio/mp4",
-      "includes": "**/*.m4a"
+      "includes": ["**/*.m4a", "**/*.aac"]
     },
     {
       "@type": "cr:FileSet",
