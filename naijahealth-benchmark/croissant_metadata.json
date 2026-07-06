@@ -1,0 +1,198 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "naijahealth-benchmark",
+  "description": "A healthcare benchmarking dataset for evaluating LLM performance on medical queries across three Nigerian languages — Pidgin, Hausa, and Igbo. Each entry pairs an English health prompt (single-turn or multi-turn clinical conversations) with human translations, alongside a scored rubric tailored to the Nigerian healthcare context covering local disease prevalence, available resources, and clinical practice norms.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+  "version": "0.1.0-preview",
+  "comment": "This is a preview sample of a larger commercial dataset. For access to the full dataset, please contact the authors.",
+  "inLanguage": ["en", "pcm", "ha", "ig"],
+  "keywords": [
+    "healthcare",
+    "multilingual",
+    "Nigeria",
+    "Pidgin",
+    "Hausa",
+    "Igbo",
+    "LLM evaluation",
+    "benchmarking",
+    "medical NLP",
+    "low-resource languages"
+  ],
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "data-file",
+      "name": "naijahealth_output.json",
+      "contentUrl": "naijahealth_output.json",
+      "encodingFormat": "application/json"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "prompts",
+      "name": "prompts",
+      "description": "Healthcare prompts with multilingual translations and Nigerian-context scoring rubrics.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/prompt_id",
+          "name": "prompt_id",
+          "description": "Unique identifier (UUID) for the prompt scenario.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].prompt_id" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/prompt_text",
+          "name": "prompt_text",
+          "description": "English prompt text(s). Single-turn prompts have one entry; multi-turn conversations have multiple entries with labels (Prompt_1, Prompt_2, etc.).",
+          "dataType": "sc:Text",
+          "repeated": true,
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].prompts[*].text" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/prompt_label",
+          "name": "prompt_label",
+          "description": "Label indicating the prompt turn (e.g. 'Prompt', 'Prompt_1', 'Prompt_2').",
+          "dataType": "sc:Text",
+          "repeated": true,
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].prompts[*].label" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/pidgin",
+          "name": "pidgin_translation",
+          "description": "Nigerian Pidgin translation of the prompt(s).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].languages.Pidgin" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/hausa",
+          "name": "hausa_translation",
+          "description": "Hausa translation of the prompt(s).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].languages.Hausa" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "prompts/igbo",
+          "name": "igbo_translation",
+          "description": "Igbo translation of the prompt(s).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].languages.Igbo" }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "rubric",
+      "name": "rubric",
+      "description": "Nigerian-context scoring rubric criteria with positive and negative scores.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "rubric/prompt_id",
+          "name": "prompt_id",
+          "description": "The prompt this rubric criterion belongs to.",
+          "dataType": "sc:Text",
+          "references": { "field": { "@id": "prompts/prompt_id" } },
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].prompt_id" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "rubric/criteria",
+          "name": "criteria",
+          "description": "Rubric criterion text, adapted to the Nigerian healthcare context.",
+          "dataType": "sc:Text",
+          "repeated": true,
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].rubric[*].criteria" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "rubric/score",
+          "name": "score",
+          "description": "Score weight for the criterion. Positive values reward presence; negative values penalize absence or errors.",
+          "dataType": "sc:Float",
+          "repeated": true,
+          "source": {
+            "fileObject": { "@id": "data-file" },
+            "extract": { "jsonPath": "$[*].rubric[*].score" }
+          }
+        }
+      ]
+    }
+  ]
+}
