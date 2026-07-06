@@ -1,0 +1,156 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "afrivoices-short-story-speech",
+  "description": "A multilingual speech dataset of African short stories featuring 5–10 minute natural narrations in Yoruba, Igbo, Hausa, and Dholuo. Includes traditional folktales and contemporary narratives exploring cultural preservation and technology, with paired audio recordings and transcripts designed for ASR, TTS, and speech-text alignment research on low-resource African languages.",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "license": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "version": "0.1.0-preview",
+  "comment": "This is a preview sample of a larger multilingual speech collection in development. Contact the authors for access to the full dataset or to commission additional recordings.",
+  "inLanguage": ["yo", "ig", "ha", "luo"],
+  "keywords": [
+    "speech",
+    "audio",
+    "transcription",
+    "short stories",
+    "folktales",
+    "storytelling",
+    "multilingual",
+    "African languages",
+    "Yoruba",
+    "Igbo",
+    "Hausa",
+    "Dholuo",
+    "ASR",
+    "TTS",
+    "low-resource languages",
+    "Nigeria",
+    "Kenya",
+    "cultural preservation"
+  ],
+  "distribution": [
+    {
+      "@type": "cr:FileSet",
+      "@id": "audio-files",
+      "name": "audio-files",
+      "description": "Audio recordings of short story narrations.",
+      "encodingFormat": "audio/mp4",
+      "includes": "**/*.m4a"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "transcript-files",
+      "name": "transcript-files",
+      "description": "Transcripts of short story narrations.",
+      "encodingFormat": "text/plain",
+      "includes": "**/*.txt"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "stories",
+      "name": "stories",
+      "description": "Individual short story recordings with metadata, audio, and transcripts.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "stories/story_id",
+          "name": "story_id",
+          "description": "Unique identifier for the story, derived from the filename.",
+          "dataType": "sc:Text"
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/language",
+          "name": "language",
+          "description": "Language of the narration (yoruba, igbo, hausa, or dholuo).",
+          "dataType": "sc:Text"
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/genre",
+          "name": "genre",
+          "description": "Story genre: 'folktale' for traditional oral stories or 'contemporary_narrative' for modern fiction exploring cultural themes.",
+          "dataType": "sc:Text"
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/has_audio",
+          "name": "has_audio",
+          "description": "Whether an audio recording is available for this story.",
+          "dataType": "sc:Boolean"
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/has_transcript",
+          "name": "has_transcript",
+          "description": "Whether a text transcript is available for this story.",
+          "dataType": "sc:Boolean"
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/audio",
+          "name": "audio",
+          "description": "Audio recording of the short story narration.",
+          "dataType": "sc:AudioObject",
+          "source": {
+            "fileSet": { "@id": "audio-files" },
+            "extract": { "fileProperty": "content" }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "stories/transcript",
+          "name": "transcript",
+          "description": "Text transcript of the narration.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileSet": { "@id": "transcript-files" },
+            "extract": { "fileProperty": "content" }
+          }
+        }
+      ]
+    }
+  ]
+}
