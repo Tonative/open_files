@@ -69,7 +69,7 @@
       "@type": "cr:FileObject",
       "@id": "data-file",
       "name": "naijahealth_output.json",
-      "contentUrl": "naijahealth_output.json",
+      "contentUrl": "naijahealthbench.json",
       "encodingFormat": "application/json"
     }
   ],
